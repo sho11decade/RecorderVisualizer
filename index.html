@@ -42,11 +42,10 @@
     <meta name="apple-mobile-web-app-title" content="Recorder Viz">
     <link rel="apple-touch-icon" href="/icon.svg">
     
-    <!-- Google Analytics - Initialized dynamically in React -->
+    <!-- Google Analytics -->
     <script>
-      // Placeholder for Google Analytics - will be configured in App.tsx
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      window.gtag = function(){dataLayer.push(arguments);}
       gtag('js', new Date());
     </script>
   </head>
