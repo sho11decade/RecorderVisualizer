@@ -5,6 +5,7 @@ import { useEffect } from 'react';
  */
 export function useKeyboardShortcuts(handlers: {
   onSpace?: () => void;
+  onHelp?: () => void;
 }) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -16,6 +17,11 @@ export function useKeyboardShortcuts(handlers: {
       if (e.code === 'Space' && handlers.onSpace) {
         e.preventDefault();
         handlers.onSpace();
+      }
+      
+      if (e.key === '?' && handlers.onHelp) {
+        e.preventDefault();
+        handlers.onHelp();
       }
     };
 

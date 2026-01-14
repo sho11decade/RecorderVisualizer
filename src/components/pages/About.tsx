@@ -41,6 +41,13 @@ export const About = () => {
           最新のWeb技術（Three.js, Web Audio API）で解決したいという思いから生まれました。
           インストール不要で、タブレットやPCからすぐに使い始められます。
         </p>
+        <h3 className="text-lg font-semibold text-slate-800">開発者</h3>
+        <p>
+          このアプリは個人開発者のRiceZeroが制作・公開しています。<br />
+          WebSite: <a href="https://ricezero.fun/" className="text-indigo-600 hover:underline" target="_blank" rel="noopener noreferrer">ricezero.fun</a><br />
+          Twitter: <a href="https://twitter.com/ricezero21" className="text-indigo-600 hover:underline" target="_blank" rel="noopener noreferrer">@ricezero21</a><br />
+          E-mail: <a href="mailto:contact@ricezer.fun" className="text-indigo-600 hover:underline">contact@ricezer.fun</a>
+        </p>
         
         <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 mt-4">
           <p className="text-xs text-slate-500 mb-2">
@@ -51,7 +58,7 @@ export const About = () => {
       
       <div className="flex justify-center gap-4 pt-4 border-t border-slate-100">
         <Button variant="outline" size="sm" className="gap-2" asChild>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/sho11decade/RecorderVisualizer" target="_blank" rel="noopener noreferrer">
             <Github className="w-4 h-4" />
             GitHub
           </a>

@@ -10,7 +10,7 @@ interface PlaybackControlsProps {
   useMetronome: boolean;
   isLooping: boolean;
   onPlayToggle: () => void;
-  onMicToggle: () => void;
+  onMicToggle: () => Promise<void>;
   onMetronomeToggle: (value: boolean) => void;
   onLoopToggle: (value: boolean) => void;
   onLoadPreset: (name: string) => void;
@@ -29,6 +29,15 @@ export function PlaybackControls({
   onLoadPreset,
   onClear
 }: PlaybackControlsProps) {
+  const handleMicToggle = async () => {
+    try {
+      await onMicToggle();
+    } catch (error) {
+      // Error is already handled in the hook
+      console.error('Mic toggle error:', error);
+    }
+  };
+
   return (
     <div className="p-4 space-y-3 border-t border-slate-100 bg-slate-50/50 shrink-0">
       <div className="space-y-2">
@@ -55,16 +64,20 @@ export function PlaybackControls({
 
           <Toggle
             pressed={isMicActive}
-            onPressedChange={onMicToggle}
-            className={`h-10 w-10 border transition-colors ${
+            onPressedChange={handleMicToggle}
+            className={`h-10 w-10 border transition-all ${
               isMicActive 
-                ? 'bg-red-50 text-red-600 border-red-200 hover:bg-red-100' 
+                ? 'bg-red-50 text-red-600 border-red-200 hover:bg-red-100 shadow-sm' 
                 : 'bg-white border-slate-200 hover:bg-slate-50'
             }`}
             aria-label="マイク入力"
-            title="マイクで音程をチェック"
+            title={isMicActive ? 'マイクをオフにする' : 'マイクで音程をチェック'}
           >
-            {isMicActive ? <Mic className="w-4 h-4" /> : <MicOff className="w-4 h-4" />}
+            {isMicActive ? (
+              <Mic className="w-4 h-4 animate-pulse" />
+            ) : (
+              <MicOff className="w-4 h-4" />
+            )}
           </Toggle>
 
           <Toggle

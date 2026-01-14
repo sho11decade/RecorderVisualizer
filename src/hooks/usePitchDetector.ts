@@ -8,6 +8,7 @@ import type { PitchResult } from '../types';
 export function usePitchDetector() {
   const [isMicActive, setIsMicActive] = useState(false);
   const [detectedPitch, setDetectedPitch] = useState<PitchResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const animationFrameRef = useRef<number | null>(null);
 
   // マイク検出ループ
@@ -39,12 +40,16 @@ export function usePitchDetector() {
     if (isMicActive) {
       pitchDetector.stop();
       setIsMicActive(false);
+      setError(null);
     } else {
       try {
+        setError(null);
         await pitchDetector.start();
         setIsMicActive(true);
       } catch (err) {
-        alert("マイクの使用が許可されませんでした。ブラウザの設定を確認してください。");
+        const errorMessage = err instanceof Error ? err.message : 'マイクの使用が許可されませんでした';
+        setError(errorMessage);
+        throw new Error(errorMessage);
       }
     }
   };
@@ -57,5 +62,5 @@ export function usePitchDetector() {
     };
   }, []);
 
-  return { isMicActive, detectedPitch, toggleMic };
+  return { isMicActive, detectedPitch, error, toggleMic };
 }

@@ -20,11 +20,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogTrigger,
 } from "./components/ui/dialog";
 
-import { About } from './components/pages/About';
-import { Privacy } from './components/pages/Privacy';
+import { Toaster } from './components/ui/toaster';
+import { toast } from './hooks/useToast';
+import { ConfirmDialog } from './components/ConfirmDialog';
 
 // Refactored Components
 import { HeaderControls } from './components/sequencer/HeaderControls';
@@ -48,7 +48,7 @@ import { INITIAL_STEPS, WELCOME_KEY } from './constants/app';
 export default function App() {
   // Use custom hooks
   const [melodySteps, setMelodySteps] = useMelodyStorage();
-  const { isMicActive, detectedPitch, toggleMic } = usePitchDetector();
+  const { isMicActive, detectedPitch, error: micError, toggleMic } = usePitchDetector();
   const isHorizontal = useResponsiveLayout();
   
   // Playback state
@@ -71,6 +71,12 @@ export default function App() {
   // UI state
   const [previewNote, setPreviewNote] = useState<string>('C5');
   const [showWelcome, setShowWelcome] = useState(false);
+  const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
+  
+  // Confirm dialog state
+  const [showClearDialog, setShowClearDialog] = useState(false);
+  const [showLoadPresetDialog, setShowLoadPresetDialog] = useState(false);
+  const [pendingPresetName, setPendingPresetName] = useState<string | null>(null);
 
   // Refs
   const countInTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -83,6 +89,9 @@ export default function App() {
       } else {
         handlePlay();
       }
+    },
+    onHelp: () => {
+      setShowKeyboardHelp(true);
     },
   });
 
@@ -125,6 +134,17 @@ export default function App() {
     audioEngine.setMelodyMute(isMelodyMuted);
   }, [isMelodyMuted]);
 
+  // Handle mic errors
+  useEffect(() => {
+    if (micError) {
+      toast({
+        title: "マイクエラー",
+        description: micError,
+        variant: "destructive",
+      });
+    }
+  }, [micError]);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -136,10 +156,24 @@ export default function App() {
 
   // Playback control
   const handlePlay = () => {
-    if (melodySteps.every(n => n === null)) return;
+    if (melodySteps.every(n => n === null)) {
+      toast({
+        title: "メロディーが空です",
+        description: "音符を配置してから再生してください",
+        variant: "default",
+      });
+      return;
+    }
     
     setIsPlaying(true);
     setCurrentStep(null);
+    
+    toast({
+      title: "再生開始",
+      description: "Spaceキーで停止できます",
+      variant: "success",
+    });
+    
     audioEngine.startSequence(
       melodySteps,
       bpm,
@@ -147,6 +181,12 @@ export default function App() {
       () => {
         setIsPlaying(false);
         setCurrentStep(null);
+        if (!isLooping) {
+          toast({
+            title: "再生完了",
+            variant: "success",
+          });
+        }
       },
       isLooping,
       useMetronome
@@ -172,33 +212,66 @@ export default function App() {
       newSteps[stepIndex] = noteKey;
       audioEngine.playNote(FINGERINGS[noteKey].pitch, "8n");
       setPreviewNote(noteKey);
+      
+      // Visual feedback via toast
+      toast({
+        title: `音符を配置: ${FINGERINGS[noteKey].note}`,
+        description: `ポジション ${stepIndex + 1}`,
+        variant: "default",
+      });
     }
     setMelodySteps(newSteps);
   };
 
   const addSteps = () => {
     setMelodySteps(prev => [...prev, ...Array(8).fill(null)]);
+    toast({
+      title: "小節を追加しました",
+      description: "8ステップ追加されました",
+      variant: "success",
+    });
   };
 
   // Preset management
   const loadPreset = (name: string) => {
-    if (confirm(`「${name}」を読み込みますか？\n現在の編集内容は上書きされます。`)) {
-      stopPlayback();
-      const song = PRESETS[name];
-      setMelodySteps([...song.steps]);
-      setBpm(song.bpm);
-      setOriginalBpm(song.bpm);
-      setCurrentSongTitle(song.name);
-      setIsLooping(true);
-    }
+    setPendingPresetName(name);
+    setShowLoadPresetDialog(true);
+  };
+  
+  const confirmLoadPreset = () => {
+    if (!pendingPresetName) return;
+    
+    stopPlayback();
+    const song = PRESETS[pendingPresetName];
+    setMelodySteps([...song.steps]);
+    setBpm(song.bpm);
+    setOriginalBpm(song.bpm);
+    setCurrentSongTitle(song.name);
+    setIsLooping(true);
+    
+    toast({
+      title: "プリセットを読み込みました",
+      description: `「${pendingPresetName}」の練習を始めましょう！`,
+      variant: "success",
+    });
+    
+    setPendingPresetName(null);
   };
 
   const clearMelody = () => {
-    if (confirm('メロディーを全て消去しますか？')) {
-      stopPlayback();
-      setMelodySteps(Array(INITIAL_STEPS).fill(null));
-      setCurrentSongTitle(null);
-    }
+    setShowClearDialog(true);
+  };
+  
+  const confirmClearMelody = () => {
+    stopPlayback();
+    setMelodySteps(Array(INITIAL_STEPS).fill(null));
+    setCurrentSongTitle(null);
+    
+    toast({
+      title: "メロディーをクリアしました",
+      description: "新しいメロディーを作成できます",
+      variant: "default",
+    });
   };
 
   // Tuner status calculation
@@ -210,18 +283,28 @@ export default function App() {
       {/* Welcome Dialog */}
       <Dialog open={showWelcome} onOpenChange={(open: boolean) => {
         setShowWelcome(open);
-        if (!open) localStorage.setItem(WELCOME_KEY, 'true');
+        if (!open) {
+          localStorage.setItem(WELCOME_KEY, 'true');
+          toast({
+            title: "練習を始めましょう！",
+            description: "キーボードの「?」でショートカット一覧を表示できます",
+            variant: "success",
+          });
+        }
       }}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md animate-in fade-in-50 zoom-in-95 duration-300">
           <DialogHeader>
-            <DialogTitle>Recorder Viz へようこそ！</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <span className="text-2xl">🎵</span>
+              Recorder Viz へようこそ！
+            </DialogTitle>
             <DialogDescription>
               ブラウザで動くリコーダー練習アプリです。
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4 text-sm text-slate-600">
-            <div className="flex items-start gap-3">
-              <div className="bg-indigo-100 p-2 rounded-full text-indigo-600">
+            <div className="flex items-start gap-3 animate-in slide-in-from-left-4 duration-500 delay-100">
+              <div className="bg-indigo-100 p-2 rounded-full text-indigo-600 shadow-sm">
                 <Music className="w-5 h-5" />
               </div>
               <div>
@@ -229,8 +312,8 @@ export default function App() {
                 「カエルの歌」などの定番曲を選んで、自動演奏に合わせて練習できます。
               </div>
             </div>
-            <div className="flex items-start gap-3">
-              <div className="bg-emerald-100 p-2 rounded-full text-emerald-600">
+            <div className="flex items-start gap-3 animate-in slide-in-from-left-4 duration-500 delay-200">
+              <div className="bg-emerald-100 p-2 rounded-full text-emerald-600 shadow-sm">
                 <Mic className="w-5 h-5" />
               </div>
               <div>
@@ -238,8 +321,8 @@ export default function App() {
                 マイクをオンにすると、あなたの吹いている音が合っているか自動判定します。
               </div>
             </div>
-            <div className="flex items-start gap-3">
-              <div className="bg-orange-100 p-2 rounded-full text-orange-600">
+            <div className="flex items-start gap-3 animate-in slide-in-from-left-4 duration-500 delay-300">
+              <div className="bg-orange-100 p-2 rounded-full text-orange-600 shadow-sm">
                 <Settings2 className="w-5 h-5" />
               </div>
               <div>
@@ -272,6 +355,8 @@ export default function App() {
             onVolumeChange={setVolume}
             onMutedChange={setIsMelodyMuted}
             onInfoClick={() => setShowWelcome(true)}
+            showKeyboardHelp={showKeyboardHelp}
+            onKeyboardHelpChange={setShowKeyboardHelp}
           />
 
           {/* 3D Viewport */}
@@ -443,39 +528,33 @@ export default function App() {
             <ScrollBar orientation="vertical" className="w-3" />
           </ScrollArea>
 
-          {/* Footer Area with About/Privacy Links */}
-          <div className="px-6 py-2 border-t border-slate-200 bg-white text-xs text-slate-400 flex justify-end gap-4 shrink-0">
-            <Dialog>
-              <DialogTrigger asChild>
-                <button className="hover:text-slate-600 transition-colors">About</button>
-              </DialogTrigger>
-              <DialogContent className="max-h-[80vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>About Recorder Viz</DialogTitle>
-                  <DialogDescription className="sr-only">Explanation of the app</DialogDescription>
-                </DialogHeader>
-                <About />
-              </DialogContent>
-            </Dialog>
-
-            <Dialog>
-              <DialogTrigger asChild>
-                <button className="hover:text-slate-600 transition-colors">Privacy</button>
-              </DialogTrigger>
-              <DialogContent className="max-h-[80vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>Privacy Policy</DialogTitle>
-                  <DialogDescription className="sr-only">Privacy policy details</DialogDescription>
-                </DialogHeader>
-                <Privacy />
-              </DialogContent>
-            </Dialog>
-
-            <span>© 2026 RiceZero</span>
-          </div>
-
         </ResizablePanel>
       </ResizablePanelGroup>
+      
+      {/* Confirm Dialogs */}
+      <ConfirmDialog
+        open={showClearDialog}
+        onOpenChange={setShowClearDialog}
+        title="メロディーをクリア"
+        description="現在のメロディーを全て消去します。この操作は取り消せません。"
+        confirmText="クリアする"
+        cancelText="キャンセル"
+        onConfirm={confirmClearMelody}
+        variant="destructive"
+      />
+      
+      <ConfirmDialog
+        open={showLoadPresetDialog}
+        onOpenChange={setShowLoadPresetDialog}
+        title="プリセットを読み込み"
+        description={pendingPresetName ? `「${pendingPresetName}」を読み込みますか？現在の編集内容は上書きされます。` : ''}
+        confirmText="読み込む"
+        cancelText="キャンセル"
+        onConfirm={confirmLoadPreset}
+        variant="default"
+      />
+      
+      <Toaster />
     </div>
   );
 }

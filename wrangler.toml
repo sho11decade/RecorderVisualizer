@@ -1,0 +1,9 @@
+name = "recorder-visualizer"
+pages_build_output_dir = "dist"
+
+[build]
+command = "npm run build"
+cwd = "./"
+
+[env.production]
+name = "recorder-visualizer-prod"
