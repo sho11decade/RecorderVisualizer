@@ -16,14 +16,14 @@ declare global {
  * Google Analytics 計測ID（ハードコーディング）
  * Google Analytics https://analytics.google.com で取得
  */
-const GA_MEASUREMENT_ID = 'G-7G6NFXX580'; // ← ここに計測IDを入れてください
+const GA_MEASUREMENT_ID = 'G-7G6NFXX580';
 
 /**
  * Google Analytics を動的に初期化
  */
 export const initializeGoogleAnalytics = () => {
-  if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === 'G-7G6NFXX580') {
-    console.warn('Google Analytics measurement ID not configured. Update GA_MEASUREMENT_ID in src/utils/analytics.ts');
+  if (!GA_MEASUREMENT_ID) {
+    console.warn('Google Analytics measurement ID not configured.');
     return;
   }
 
@@ -33,16 +33,15 @@ export const initializeGoogleAnalytics = () => {
   script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
   document.head.appendChild(script);
 
-  // 設定を実行
-  if (typeof window.gtag === 'undefined') {
-    console.warn('Google Analytics gtag not available');
-    return;
-  }
-
-  window.gtag('config', GA_MEASUREMENT_ID, {
-    'page_path': window.location.pathname,
-    'cookie_flags': 'SameSite=None;Secure'
-  });
+  // スクリプトロード後に設定を実行
+  script.onload = () => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('config', GA_MEASUREMENT_ID, {
+        'page_path': window.location.pathname,
+        'cookie_flags': 'SameSite=None;Secure'
+      });
+    }
+  };
 };
 
 /**
@@ -51,7 +50,7 @@ export const initializeGoogleAnalytics = () => {
 export const trackPageView = (path: string, title: string) => {
   if (typeof window.gtag === 'undefined') return;
 
-  window.gtag('config', import.meta.env.VITE_GA_MEASUREMENT_ID, {
+  window.gtag('config', GA_MEASUREMENT_ID, {
     'page_path': path,
     'page_title': title
   });
@@ -117,7 +116,7 @@ export const usePageTracking = () => {
   useEffect(() => {
     // ページビューを記録
     if (typeof window.gtag !== 'undefined') {
-      window.gtag('config', import.meta.env.VITE_GA_MEASUREMENT_ID, {
+      window.gtag('config', GA_MEASUREMENT_ID, {
         'page_path': window.location.pathname,
         'page_title': document.title
       });
