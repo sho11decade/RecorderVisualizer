@@ -1,9 +1,0 @@
-# GitHub Actions ワークフローは使用していません
-#
-# Cloudflare Pages は GitHub とネイティブに統合しているため、GitHub Actions ワークフローは不要です。
-#
-# Cloudflare Dashboard での GitHub連携設定により、以下が自動的に行われます：
-#
-# GitHub push → Cloudflare 自動検出 → npm install → npm run build → Pages デプロイ
-#
-# 詳細は GITHUB_DEPLOY_SETUP.md を参照してください。

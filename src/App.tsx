@@ -41,15 +41,41 @@ import { useStepScroll } from './hooks/useStepScroll';
 
 // Utils
 import { getTunerStatus } from './utils/tunerHelpers';
+import { 
+  initializeGoogleAnalytics, 
+  trackPlaybackEvent, 
+  trackMelodyEvent, 
+  trackMicEvent,
+  trackErrorEvent
+} from './utils/analytics';
 
 // Constants
 import { INITIAL_STEPS, WELCOME_KEY } from './constants/app';
 
 export default function App() {
+  // Initialize Google Analytics
+  useEffect(() => {
+    const gaId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+    if (gaId && gaId !== 'YOUR_GA_ID') {
+      initializeGoogleAnalytics(gaId);
+    }
+  }, []);
+
   // Use custom hooks
   const [melodySteps, setMelodySteps] = useMelodyStorage();
-  const { isMicActive, detectedPitch, error: micError, toggleMic } = usePitchDetector();
+  const { isMicActive, detectedPitch, error: micError, toggleMic: originalToggleMic } = usePitchDetector();
   const isHorizontal = useResponsiveLayout();
+  
+  // Wrap toggleMic with analytics tracking
+  const toggleMic = async () => {
+    try {
+      await originalToggleMic();
+      trackMicEvent(isMicActive ? 'off' : 'on');
+    } catch (error) {
+      trackErrorEvent('microphone', error instanceof Error ? error.message : 'Unknown error');
+      throw error;
+    }
+  };
   
   // Playback state
   const [isPlaying, setIsPlaying] = useState(false);
@@ -84,11 +110,7 @@ export default function App() {
   // Keyboard shortcuts
   useKeyboardShortcuts({
     onSpace: () => {
-      if (isPlaying) {
-        stopPlayback();
-      } else {
-        handlePlay();
-      }
+      handlePlayToggle();
     },
     onHelp: () => {
       setShowKeyboardHelp(true);
@@ -155,7 +177,18 @@ export default function App() {
   }, []);
 
   // Playback control
-  const handlePlay = () => {
+  const handlePlayToggle = () => {
+    if (isPlaying) {
+      stopPlayback();
+      trackPlaybackEvent('stop');
+      toast({
+        title: "再生停止",
+        description: "メロディーを停止しました",
+        variant: "success",
+      });
+      return;
+    }
+
     if (melodySteps.every(n => n === null)) {
       toast({
         title: "メロディーが空です",
@@ -167,6 +200,7 @@ export default function App() {
     
     setIsPlaying(true);
     setCurrentStep(null);
+    trackPlaybackEvent('play');
     
     toast({
       title: "再生開始",
@@ -248,6 +282,7 @@ export default function App() {
     setOriginalBpm(song.bpm);
     setCurrentSongTitle(song.name);
     setIsLooping(true);
+    trackMelodyEvent('load_preset');
     
     toast({
       title: "プリセットを読み込みました",
@@ -266,6 +301,7 @@ export default function App() {
     stopPlayback();
     setMelodySteps(Array(INITIAL_STEPS).fill(null));
     setCurrentSongTitle(null);
+    trackMelodyEvent('clear');
     
     toast({
       title: "メロディーをクリアしました",
@@ -386,7 +422,7 @@ export default function App() {
               isMicActive={isMicActive}
               useMetronome={useMetronome}
               isLooping={isLooping}
-              onPlayToggle={handlePlay}
+              onPlayToggle={handlePlayToggle}
               onMicToggle={toggleMic}
               onMetronomeToggle={setUseMetronome}
               onLoopToggle={setIsLooping}

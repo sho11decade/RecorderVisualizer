@@ -46,7 +46,7 @@ export const About = () => {
           このアプリは個人開発者のRiceZeroが制作・公開しています。<br />
           WebSite: <a href="https://ricezero.fun/" className="text-indigo-600 hover:underline" target="_blank" rel="noopener noreferrer">ricezero.fun</a><br />
           Twitter: <a href="https://twitter.com/ricezero21" className="text-indigo-600 hover:underline" target="_blank" rel="noopener noreferrer">@ricezero21</a><br />
-          E-mail: <a href="mailto:contact@ricezer.fun" className="text-indigo-600 hover:underline">contact@ricezer.fun</a>
+          E-mail: <a href="mailto:contact@ricezero.fun" className="text-indigo-600 hover:underline">contact@ricezero.fun</a>
         </p>
         
         <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 mt-4">
