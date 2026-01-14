@@ -42,16 +42,12 @@
     <meta name="apple-mobile-web-app-title" content="Recorder Viz">
     <link rel="apple-touch-icon" href="/icon.svg">
     
-    <!-- Google Analytics (Set GA_MEASUREMENT_ID in environment) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID"></script>
+    <!-- Google Analytics - Initialized dynamically in React -->
     <script>
+      // Placeholder for Google Analytics - will be configured in App.tsx
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'YOUR_GA_ID', {
-        'page_path': window.location.pathname,
-        'cookie_flags': 'SameSite=None;Secure'
-      });
     </script>
   </head>
   <body>

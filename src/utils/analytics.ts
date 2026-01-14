@@ -13,21 +13,26 @@ declare global {
 }
 
 /**
- * Google Analytics を初期化
+ * Google Analytics を動的に初期化
  */
 export const initializeGoogleAnalytics = (measurementId: string) => {
   if (!measurementId || measurementId === 'YOUR_GA_ID') {
-    console.warn('Google Analytics measurement ID not configured');
+    console.warn('Google Analytics measurement ID not configured. Set VITE_GA_MEASUREMENT_ID in environment.');
     return;
   }
 
-  // gtag関数が利用可能か確認
+  // Google Analytics スクリプトを動的に読み込む
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  document.head.appendChild(script);
+
+  // 設定を実行
   if (typeof window.gtag === 'undefined') {
-    console.warn('Google Analytics script not loaded');
+    console.warn('Google Analytics gtag not available');
     return;
   }
 
-  // GA設定
   window.gtag('config', measurementId, {
     'page_path': window.location.pathname,
     'cookie_flags': 'SameSite=None;Secure'
