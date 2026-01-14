@@ -55,10 +55,7 @@ import { INITIAL_STEPS, WELCOME_KEY } from './constants/app';
 export default function App() {
   // Initialize Google Analytics
   useEffect(() => {
-    const gaId = import.meta.env.VITE_GA_MEASUREMENT_ID;
-    if (gaId && gaId !== 'YOUR_GA_ID') {
-      initializeGoogleAnalytics(gaId);
-    }
+    initializeGoogleAnalytics();
   }, []);
 
   // Use custom hooks

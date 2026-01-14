@@ -13,18 +13,24 @@ declare global {
 }
 
 /**
+ * Google Analytics 計測ID（ハードコーディング）
+ * Google Analytics https://analytics.google.com で取得
+ */
+const GA_MEASUREMENT_ID = 'G-7G6NFXX580'; // ← ここに計測IDを入れてください
+
+/**
  * Google Analytics を動的に初期化
  */
-export const initializeGoogleAnalytics = (measurementId: string) => {
-  if (!measurementId || measurementId === 'YOUR_GA_ID') {
-    console.warn('Google Analytics measurement ID not configured. Set VITE_GA_MEASUREMENT_ID in environment.');
+export const initializeGoogleAnalytics = () => {
+  if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === 'G-7G6NFXX580') {
+    console.warn('Google Analytics measurement ID not configured. Update GA_MEASUREMENT_ID in src/utils/analytics.ts');
     return;
   }
 
   // Google Analytics スクリプトを動的に読み込む
   const script = document.createElement('script');
   script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
   document.head.appendChild(script);
 
   // 設定を実行
@@ -33,7 +39,7 @@ export const initializeGoogleAnalytics = (measurementId: string) => {
     return;
   }
 
-  window.gtag('config', measurementId, {
+  window.gtag('config', GA_MEASUREMENT_ID, {
     'page_path': window.location.pathname,
     'cookie_flags': 'SameSite=None;Secure'
   });
