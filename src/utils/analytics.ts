@@ -27,21 +27,31 @@ export const initializeGoogleAnalytics = () => {
     return;
   }
 
+  // データレイヤーが既に初期化されているか確認
+  if (!window.dataLayer) {
+    window.dataLayer = [];
+  }
+
   // Google Analytics スクリプトを動的に読み込む
   const script = document.createElement('script');
   script.async = true;
   script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  document.head.appendChild(script);
-
-  // スクリプトロード後に設定を実行
+  
   script.onload = () => {
-    if (typeof window.gtag !== 'undefined') {
-      window.gtag('config', GA_MEASUREMENT_ID, {
-        'page_path': window.location.pathname,
-        'cookie_flags': 'SameSite=None;Secure'
-      });
-    }
+    // 公式スクリプト読み込み後、データレイヤーの履歴コマンドを実行
+    window.gtag('js', new Date());
+    window.gtag('config', GA_MEASUREMENT_ID, {
+      'page_path': window.location.pathname,
+      'cookie_flags': 'SameSite=None;Secure'
+    });
+    console.log('Google Analytics initialized successfully');
   };
+
+  script.onerror = () => {
+    console.error('Failed to load Google Analytics script');
+  };
+
+  document.head.appendChild(script);
 };
 
 /**
