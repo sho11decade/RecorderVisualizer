@@ -26,7 +26,7 @@ import { Toaster } from './components/ui/toaster';
 import { toast } from './hooks/useToast';
 import { ConfirmDialog } from './components/ConfirmDialog';
 
-// Refactored Components
+// Refactored Component
 import { HeaderControls } from './components/sequencer/HeaderControls';
 import { RecorderDisplay } from './components/sequencer/RecorderDisplay';
 import { BPMControl } from './components/sequencer/BPMControl';
