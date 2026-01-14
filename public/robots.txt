@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /dist/
+Disallow: /node_modules/
+
+# Sitemapへのリンク
+Sitemap: https://recorder-viz.pages.dev/sitemap.xml
+
+# クローリング速度の制限
+Crawl-delay: 1
