@@ -82,7 +82,7 @@
 - A: Search Consoleでサイトマップを登録後、インデックス依頼を行ってください。通常2-4週間必要
 
 **Q: robots.txtの場所は？**
-- A: `public/robots.txt` - デプロイ時に `https://recorder-viz.pages.dev/robots.txt` で自動的にアクセス可能
+- A: `public/robots.txt` - デプロイ時に `https://recorder.ricezero.fun/robots.txt` で自動的にアクセス可能
 
 **Q: sitemap.xmlをカスタマイズしたい**
 - A: `public/sitemap.xml` を編集してください。複数ページがある場合は全URLを追加してください
@@ -93,7 +93,7 @@
 
 ```xml
 <url>
-  <loc>https://recorder-viz.pages.dev/new-page</loc>
+  <loc>https://recorder.ricezero.fun/new-page</loc>
   <lastmod>2026-01-14</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.8</priority>
@@ -111,7 +111,7 @@
   "@type": "SoftwareApplication",
   "name": "Recorder Viz",
   "description": "インタラクティブなリコーダー学習ツール",
-  "url": "https://recorder-viz.pages.dev",
+  "url": "https://recorder.ricezero.fun",
   "applicationCategory": "EducationalApplication"
 }
 </script>
