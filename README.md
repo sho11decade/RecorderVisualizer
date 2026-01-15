@@ -1,4 +1,4 @@
-# 🎵 Recorder Visualizer
+# Recorder Visualizer
 
 **リコーダー学習を、もっと楽しく、もっと直感的に。**
 
@@ -8,6 +8,10 @@ Recorder Visualizer は、ブラウザで動作する無料のリコーダー練
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![React](https://img.shields.io/badge/React-19.2.0-61dafb)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)
+
+## [Access the app](https://recorder.ricezero.fun/)
+
+![スクリーンショット](./public/rec21.gif)
 
 ## 主な機能
 
@@ -67,7 +71,7 @@ npm run build
 npm run preview
 ```
 
-## 📖 使い方
+## 使い方
 
 ### 基本操作
 
@@ -87,7 +91,7 @@ npm run preview
 2. ブラウザのマイク権限を許可
 3. リコーダーを吹いて音程をチェック
 
-## 🛠️ 技術スタック
+## 技術スタック
 
 - **フロントエンド**: React 19 + TypeScript
 - **ビルドツール**: Vite 7
@@ -97,7 +101,7 @@ npm run preview
 - **スタイリング**: Tailwind CSS
 - **型チェック**: TypeScript 5.9
 
-## 📁 プロジェクト構造
+## プロジェクト構造
 
 ```
 src/
@@ -116,14 +120,14 @@ src/
 
 詳細な実装ドキュメントは [IMPLEMENTATION.md](./IMPLEMENTATION.md) を参照してください。
 
-## 🎯 対応音域
+## 対応音域
 
 現在、以下の音域に対応しています：
 
 - **C5（ド）** ～ **D6（高いレ）** の9音
 - ジャーマン式運指
 
-## 🌐 ブラウザ対応
+## ブラウザ対応
 
 - Chrome/Edge 90+
 - Firefox 88+
@@ -131,42 +135,22 @@ src/
 
 **注意**: マイク機能を使用するには HTTPS 接続が必要です。
 
-## 🤝 貢献
-
-プルリクエストを歓迎します！大きな変更の場合は、まず Issue を開いて変更内容を議論してください。
-
-### 開発フロー
-
-1. このリポジトリをフォーク
-2. フィーチャーブランチを作成 (`git checkout -b feature/amazing-feature`)
-3. 変更をコミット (`git commit -m 'feat: add amazing feature'`)
-4. ブランチをプッシュ (`git push origin feature/amazing-feature`)
-5. プルリクエストを作成
-
-## 📝 ライセンス
+## ライセンス
 
 このプロジェクトは MIT ライセンスの下で公開されています。詳細は [LICENSE](./LICENSE) ファイルを参照してください。
 
-## 🙏 謝辞
+## 謝辞
 
 - [React Three Fiber](https://docs.pmnd.rs/react-three-fiber) - 3Dレンダリング
 - [Tone.js](https://tonejs.github.io/) - Web Audio フレームワーク
 - [Radix UI](https://www.radix-ui.com/) - アクセシブルなUIコンポーネント
 - [Lucide](https://lucide.dev/) - 美しいアイコンセット
 
-## 📞 サポート
+## サポート・作者
+開発者: RiceZero (https://ricezero.fun/)
+[Twitter: @ricezero21](https://twitter.com/ricezero21)
+[GitHub: sho11decade](https://github.com/sho11decade)
+[Email: contact@ricezero.fun](mailto:contact@ricezero.fun)
 
-問題が発生した場合は、[Issues](https://github.com/yourusername/recorder-visualizer/issues) ページで報告してください。
-
-## 🗺️ ロードマップ
-
-- [ ] バロック式運指対応
-- [ ] より広い音域（C4～G6）
-- [ ] MIDI ファイルインポート
-- [ ] 録音・エクスポート機能
-- [ ] 楽譜表示モード
-- [ ] モバイルアプリ版
-
----
-
-**Recorder Visualizer** で楽しいリコーダー練習を！🎶
+問題がある場合は、[Issues](https://github.com/sho11decade/RecorderVisualizer/issues) ページで報告するか、
+[フォーム](https://ricezero.fun/contact) までお願いします。
