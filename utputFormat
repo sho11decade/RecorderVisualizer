@@ -1,0 +1,21 @@
+HTTP/1.1 400 Bad Request
+Date: Thu, 15 Jan 2026 06:15:14 GMT
+Content-Type: application/json
+Transfer-Encoding: chunked
+Connection: keep-alive
+Server: cloudflare
+CF-Ray: 9be33cc95a99590d-NRT
+CF-Cache-Status: DYNAMIC
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Expires: Sun, 25 Jan 1981 05:00:00 GMT
+Set-Cookie: __cflb=0H28vgHxwvgAQtjUGUFqYFDiSDreGJnUnzFxZrJ6e5s; SameSite=Lax; path=/; expires=Thu, 15-Jan-26 08:45:15 GMT; HttpOnly
+Set-Cookie: __cf_bm=_kH_UDm29s3UQ93FUJvEHsljowLSKHkrUOwXYh6CWcg-1768457714-1.0.1.1-DhebBYX.p1IyydOuAXdhkAN52JJduJ7UYNMVAHrA_B5KAroAqDHKuickIcyvTdZMMNU30QzUdXrUPUIGLGODLiMsjDn42riGGCZzfpJ7EB8; path=/; expires=Thu, 15-Jan-26 06:45:14 GMT; domain=.api.cloudflare.com; HttpOnly; Secure; SameSite=None
+Set-Cookie: _cfuvid=Ru8sZzmn6ax66xbftJxBMw2YM35eJ3V57f5BvuJ0nBw-1768457714301-0.0.1.1-604800000; path=/; domain=.api.cloudflare.com; HttpOnly; Secure; SameSite=None
+Strict-Transport-Security: max-age=31536000
+Pragma: no-cache
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+api-version: 2026-01-15
+cf-auditlog-id: 019bc04b-39e5-7bd8-864f-96c5cbd395cd
+
+{"success":false,"errors":[{"code":6003,"message":"Invalid request headers","error_chain":[{"code":6111,"message":"Invalid format for Authorization header"}]}],"messages":[],"result":null}
