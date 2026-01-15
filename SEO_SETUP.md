@@ -26,7 +26,7 @@
 - `canonical`: 正規URL指定
 - `manifest.json`: PWAマニフェスト
 
-### 2. OGイメージ (`public/og-image.svg`)
+### 2. OGイメージ (`public/og-image.png`)
 
 - **形式**: SVG（スケーラブル）
 - **サイズ**: 1200x630px（推奨サイズ）
