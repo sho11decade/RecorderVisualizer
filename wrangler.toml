@@ -1,9 +1,3 @@
 name = "recorder-visualizer"
 pages_build_output_dir = "dist"
 
-# Force Cloudflare cache refresh
-[env.production]
-routes = [
-  { pattern = "recorder.ricezero.fun/*", zone_name = "ricezero.fun" }
-]
-
