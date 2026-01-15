@@ -38,23 +38,23 @@ export function HeaderControls({
   onKeyboardHelpChange
 }: HeaderControlsProps) {
   return (
-    <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex flex-col gap-3 shrink-0">
+    <div className="p-5 border-b border-slate-100 bg-slate-50/50 flex flex-col gap-4 shrink-0">
       <div className="flex justify-between items-center w-full">
-        <h1 className="text-xl font-bold flex items-center gap-2 text-indigo-600 truncate">
-          <Music className="w-5 h-5 shrink-0" />
+        <h1 className="text-2xl font-bold flex items-center gap-2 text-indigo-600 truncate">
+          <Music className="w-6 h-6 shrink-0" />
           Recorder Viz
         </h1>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 text-slate-400 hover:text-indigo-600"
+                className="h-10 w-10 text-slate-400 hover:text-indigo-600"
                 title="メニュー"
               >
-                <Menu className="w-5 h-5" />
+                <Menu className="w-6 h-6" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
