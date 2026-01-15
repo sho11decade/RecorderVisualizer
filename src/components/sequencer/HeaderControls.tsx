@@ -46,6 +46,28 @@ export function HeaderControls({
         </h1>
 
         <div className="flex items-center gap-2">
+          {/* About & Privacy ダイアログボタン */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-10 px-3 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 text-sm"
+                title="このアプリについて"
+              >
+                <Info className="w-4 h-4 mr-1.5" />
+                <span className="hidden sm:inline">About</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>About Recorder Viz</DialogTitle>
+                <DialogDescription className="sr-only">Explanation of the app</DialogDescription>
+              </DialogHeader>
+              <About />
+            </DialogContent>
+          </Dialog>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -62,23 +84,7 @@ export function HeaderControls({
                 <DialogTrigger asChild>
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     <Info className="w-4 h-4 mr-2" />
-                    About
-                  </DropdownMenuItem>
-                </DialogTrigger>
-                <DialogContent className="max-h-[80vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle>About Recorder Viz</DialogTitle>
-                    <DialogDescription className="sr-only">Explanation of the app</DialogDescription>
-                  </DialogHeader>
-                  <About />
-                </DialogContent>
-              </Dialog>
-              
-              <Dialog>
-                <DialogTrigger asChild>
-                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    <Info className="w-4 h-4 mr-2" />
-                    Privacy
+                    Privacy Policy
                   </DropdownMenuItem>
                 </DialogTrigger>
                 <DialogContent className="max-h-[80vh] overflow-y-auto">
