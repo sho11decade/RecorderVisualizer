@@ -1,6 +1,7 @@
 import { Button } from '../ui/button';
 import { Slider } from '../ui/slider';
 import { Gauge, Turtle, Rabbit } from 'lucide-react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 interface BPMControlProps {
   bpm: number;
@@ -15,12 +16,14 @@ export function BPMControl({
   currentSongTitle,
   onBpmChange
 }: BPMControlProps) {
+  const { t } = useLanguage();
+
   return (
     <div className="space-y-3 p-5 border-b border-slate-100 shrink-0">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Gauge className="w-5 h-5 text-indigo-600" />
-          <span className="text-sm font-bold text-slate-600">テンポ</span>
+          <span className="text-sm font-bold text-slate-600">{t.tempo}</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-3xl font-black text-slate-800 tabular-nums">{bpm}</span>
@@ -46,7 +49,7 @@ export function BPMControl({
             onClick={() => onBpmChange(Math.round(originalBpm * 0.8))}
             title="ゆっくり (0.8x)"
           >
-            <Turtle className="w-4 h-4 mr-1.5" /> ゆっくり
+            <Turtle className="w-4 h-4 mr-1.5" /> {t.slow}
           </Button>
           <Button
             variant="outline"
@@ -55,7 +58,7 @@ export function BPMControl({
             onClick={() => onBpmChange(originalBpm)}
             title="標準速度 (1.0x)"
           >
-            <Rabbit className="w-4 h-4 mr-1.5" /> 標準
+            <Rabbit className="w-4 h-4 mr-1.5" /> {t.normal}
           </Button>
         </div>
       )}

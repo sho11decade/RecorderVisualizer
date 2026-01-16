@@ -3,6 +3,7 @@ import { Toggle } from '../ui/toggle';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Play, Pause, Mic, MicOff, Gauge, Repeat, FolderOpen, Trash2, Music } from 'lucide-react';
 import { PRESETS } from '../../data/presets';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 interface PlaybackControlsProps {
   isPlaying: boolean;
@@ -29,6 +30,8 @@ export function PlaybackControls({
   onLoadPreset,
   onClear
 }: PlaybackControlsProps) {
+  const { t } = useLanguage();
+
   const handleMicToggle = async () => {
     try {
       await onMicToggle();
@@ -51,15 +54,7 @@ export function PlaybackControls({
             onClick={onPlayToggle}
             title="再生/停止 (Spaceキー)"
           >
-            {isPlaying ? (
-              <>
-                <Pause className="w-5 h-5 mr-2" /> 停止
-              </>
-            ) : (
-              <>
-                <Play className="w-5 h-5 mr-2" /> 再生
-              </>
-            )}
+            {isPlaying ? <><Pause className="w-5 h-5 mr-2" /> {t.stop}</> : <><Play className="w-5 h-5 mr-2" /> {t.play}</>}
           </Button>
 
           <Toggle
@@ -71,7 +66,7 @@ export function PlaybackControls({
                 : 'bg-white border-slate-200 hover:bg-slate-50'
             }`}
             aria-label="マイク入力"
-            title={isMicActive ? 'マイクをオフにする' : 'マイクで音程をチェック'}
+            title={isMicActive ? t.micOn : t.micOff}
           >
             {isMicActive ? (
               <Mic className="w-5 h-5 animate-pulse" />
@@ -89,7 +84,7 @@ export function PlaybackControls({
                 : 'bg-white border-slate-200 hover:bg-slate-50'
             }`}
             aria-label="メトロノーム"
-            title="メトロノーム"
+            title={t.metronome}
           >
             <Gauge className="w-5 h-5" />
           </Toggle>
@@ -102,7 +97,7 @@ export function PlaybackControls({
                 ? 'bg-indigo-100 text-indigo-700 border-indigo-200 hover:bg-indigo-200' 
                 : 'bg-white border-slate-200 hover:bg-slate-50'
             }`}
-            title="ループ再生"
+            title={t.loop}
           >
             <Repeat className="w-5 h-5" />
           </Toggle>
@@ -112,11 +107,11 @@ export function PlaybackControls({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="w-full hover:bg-slate-50 border-slate-200 text-slate-600 h-11 text-sm">
-                <FolderOpen className="w-4 h-4 mr-2" /> 練習曲
+                <FolderOpen className="w-4 h-4 mr-2" /> {t.selectSong}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-48">
-              <DropdownMenuLabel>サンプル曲</DropdownMenuLabel>
+              <DropdownMenuLabel>{t.presetSongs}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {Object.keys(PRESETS).map((name) => (
                 <DropdownMenuItem key={name} onClick={() => onLoadPreset(name)}>
@@ -133,7 +128,7 @@ export function PlaybackControls({
             onClick={onClear} 
             className="w-full hover:bg-red-50 hover:text-red-600 hover:border-red-200 text-slate-500 border-slate-200 h-11 text-sm"
           >
-            <Trash2 className="w-4 h-4 mr-2" /> クリア
+            <Trash2 className="w-4 h-4 mr-2" /> {t.clear}
           </Button>
         </div>
       </div>

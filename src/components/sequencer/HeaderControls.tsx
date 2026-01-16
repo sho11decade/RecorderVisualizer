@@ -3,8 +3,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Slider } from '../ui/slider';
 import { Switch } from '../ui/switch';
 import { Label } from '../ui/label';
-import { Volume2, Music, Info, Menu } from 'lucide-react';
+import { Volume2, Music, Info, Menu, Languages } from 'lucide-react';
 import { KeyboardShortcutsHelp } from '../KeyboardShortcutsHelp';
+import { useLanguage } from '../../contexts/LanguageContext';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,6 +38,8 @@ export function HeaderControls({
   showKeyboardHelp,
   onKeyboardHelpChange
 }: HeaderControlsProps) {
+  const { language, setLanguage, t } = useLanguage();
+
   return (
     <div className="p-5 border-b border-slate-100 bg-slate-50/50 flex flex-col gap-4 shrink-0">
       <div className="flex justify-between items-center w-full">
@@ -46,6 +49,29 @@ export function HeaderControls({
         </h1>
 
         <div className="flex items-center gap-2">
+          {/* 言語切り替えボタン */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-10 px-3 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 text-sm"
+                title={t.language}
+              >
+                <Languages className="w-4 h-4 mr-1.5" />
+                <span className="hidden sm:inline">{language.toUpperCase()}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-36">
+              <DropdownMenuItem onClick={() => setLanguage('ja')}>
+                {language === 'ja' && '✓ '}{t.japanese}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage('en')}>
+                {language === 'en' && '✓ '}{t.english}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           {/* About & Privacy ダイアログボタン */}
           <Dialog>
             <DialogTrigger asChild>
@@ -55,8 +81,8 @@ export function HeaderControls({
                 className="h-10 px-3 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 text-sm"
                 title="このアプリについて"
               >
-                <Info className="w-4 h-4 mr-1.5" />
-                <span className="hidden sm:inline">About</span>
+                <Info className="w-4 h-4 mr-1.5 sm:mr-1.5" />
+                <span className="hidden sm:inline">{t.about}</span>
               </Button>
             </DialogTrigger>
             <DialogContent className="max-h-[80vh] overflow-y-auto">
@@ -74,7 +100,7 @@ export function HeaderControls({
                 variant="ghost"
                 size="icon"
                 className="h-10 w-10 text-slate-400 hover:text-indigo-600"
-                title="メニュー"
+                title={t.menu}
               >
                 <Menu className="w-6 h-6" />
               </Button>
@@ -84,7 +110,7 @@ export function HeaderControls({
                 <DialogTrigger asChild>
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     <Info className="w-4 h-4 mr-2" />
-                    Privacy Policy
+                    {t.privacy}
                   </DropdownMenuItem>
                 </DialogTrigger>
                 <DialogContent className="max-h-[80vh] overflow-y-auto">
@@ -99,7 +125,7 @@ export function HeaderControls({
               <DropdownMenuSeparator />
               
               <DropdownMenuItem disabled className="text-xs text-slate-400">
-                © 2026 RiceZero
+                {t.copyright}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
