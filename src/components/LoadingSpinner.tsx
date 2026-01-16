@@ -1,4 +1,5 @@
 import { Loader2 } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
@@ -19,11 +20,13 @@ export function LoadingSpinner({ size = 'md', className = '' }: LoadingSpinnerPr
   );
 }
 
-export function LoadingOverlay({ message = '読み込み中...' }: { message?: string }) {
+export function LoadingOverlay({ message }: { message?: string }) {
+  const { t } = useLanguage();
+  const text = message ?? t.loading;
   return (
     <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center z-50">
       <LoadingSpinner size="lg" />
-      <p className="mt-4 text-sm text-slate-600">{message}</p>
+      <p className="mt-4 text-sm text-slate-600">{text}</p>
     </div>
   );
 }

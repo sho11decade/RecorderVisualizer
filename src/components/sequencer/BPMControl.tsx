@@ -47,7 +47,7 @@ export function BPMControl({
             size="sm"
             className="h-9 text-sm px-3 text-slate-500 border-slate-200 hover:bg-slate-50"
             onClick={() => onBpmChange(Math.round(originalBpm * 0.8))}
-            title="ゆっくり (0.8x)"
+            title={`${t.slow} (0.8x)`}
           >
             <Turtle className="w-4 h-4 mr-1.5" /> {t.slow}
           </Button>
@@ -56,7 +56,7 @@ export function BPMControl({
             size="sm"
             className="h-9 text-sm px-3 text-slate-500 border-slate-200 hover:bg-slate-50"
             onClick={() => onBpmChange(originalBpm)}
-            title="標準速度 (1.0x)"
+            title={`${t.normal} (1.0x)`}
           >
             <Rabbit className="w-4 h-4 mr-1.5" /> {t.normal}
           </Button>

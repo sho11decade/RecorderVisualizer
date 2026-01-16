@@ -1,5 +1,6 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { Check, X, AlertCircle } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface PitchFeedbackProps {
   status: 'perfect' | 'good' | 'ok' | 'wrong' | 'waiting' | 'neutral';
@@ -7,6 +8,8 @@ interface PitchFeedbackProps {
 }
 
 export function PitchFeedback({ status, message }: PitchFeedbackProps) {
+  const { t } = useLanguage();
+
   const getIcon = () => {
     switch (status) {
       case 'perfect':
@@ -45,12 +48,12 @@ export function PitchFeedback({ status, message }: PitchFeedbackProps) {
       </TooltipTrigger>
       <TooltipContent>
         <p className="text-xs">
-          {status === 'perfect' && '完璧です！その調子です！'}
-          {status === 'good' && 'いい感じです！'}
-          {status === 'ok' && 'もう少し調整してみましょう'}
-          {status === 'wrong' && '違う音が検出されています'}
-          {status === 'waiting' && 'マイクからの入力を待っています'}
-          {status === 'neutral' && '音を検出しました'}
+          {status === 'perfect' && t.pitchMessages.perfect}
+          {status === 'good' && t.pitchMessages.good}
+          {status === 'ok' && t.pitchMessages.ok}
+          {status === 'wrong' && t.pitchMessages.wrong}
+          {status === 'waiting' && t.pitchMessages.waiting}
+          {status === 'neutral' && t.pitchMessages.neutral}
         </p>
       </TooltipContent>
     </Tooltip>

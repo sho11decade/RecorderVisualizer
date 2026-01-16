@@ -38,6 +38,7 @@ import { usePitchDetector } from './hooks/usePitchDetector';
 import { useResponsiveLayout } from './hooks/useResponsiveLayout';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useStepScroll } from './hooks/useStepScroll';
+import { useLanguage } from './contexts/LanguageContext';
 
 // Utils
 import { getTunerStatus } from './utils/tunerHelpers';
@@ -62,6 +63,7 @@ export default function App() {
   const [melodySteps, setMelodySteps] = useMelodyStorage();
   const { isMicActive, detectedPitch, error: micError, toggleMic: originalToggleMic } = usePitchDetector();
   const isHorizontal = useResponsiveLayout();
+  const { t } = useLanguage();
   
   // Wrap toggleMic with analytics tracking
   const toggleMic = async () => {
@@ -157,7 +159,7 @@ export default function App() {
   useEffect(() => {
     if (micError) {
       toast({
-        title: "マイクエラー",
+        title: t.micErrorTitle,
         description: micError,
         variant: "destructive",
       });
@@ -179,8 +181,8 @@ export default function App() {
       stopPlayback();
       trackPlaybackEvent('stop');
       toast({
-        title: "再生停止",
-        description: "メロディーを停止しました",
+        title: t.playStoppedTitle,
+        description: t.playStoppedDescription,
         variant: "success",
       });
       return;
@@ -188,8 +190,8 @@ export default function App() {
 
     if (melodySteps.every(n => n === null)) {
       toast({
-        title: "メロディーが空です",
-        description: "音符を配置してから再生してください",
+        title: t.melodyEmptyTitle,
+        description: t.melodyEmptyDescription,
         variant: "default",
       });
       return;
@@ -200,8 +202,8 @@ export default function App() {
     trackPlaybackEvent('play');
     
     toast({
-      title: "再生開始",
-      description: "Spaceキーで停止できます",
+      title: t.playStartTitle,
+      description: t.playStartDescription,
       variant: "success",
     });
     
@@ -214,7 +216,7 @@ export default function App() {
         setCurrentStep(null);
         if (!isLooping) {
           toast({
-            title: "再生完了",
+            title: t.playbackCompleteTitle,
             variant: "success",
           });
         }
@@ -245,9 +247,10 @@ export default function App() {
       setPreviewNote(noteKey);
       
       // Visual feedback via toast
+      const noteLabel = (t.notes as Record<string, string>)[noteKey] ?? FINGERINGS[noteKey].note;
       toast({
-        title: `音符を配置: ${FINGERINGS[noteKey].note}`,
-        description: `ポジション ${stepIndex + 1}`,
+        title: `${t.notePlacedTitle}: ${noteLabel}`,
+        description: t.notePosition.replace('{index}', String(stepIndex + 1)),
         variant: "default",
       });
     }
@@ -257,8 +260,8 @@ export default function App() {
   const addSteps = () => {
     setMelodySteps(prev => [...prev, ...Array(8).fill(null)]);
     toast({
-      title: "小節を追加しました",
-      description: "8ステップ追加されました",
+      title: t.measureAddedTitle,
+      description: t.measureAddedDescription,
       variant: "success",
     });
   };
@@ -282,8 +285,8 @@ export default function App() {
     trackMelodyEvent('load_preset');
     
     toast({
-      title: "プリセットを読み込みました",
-      description: `「${pendingPresetName}」の練習を始めましょう！`,
+      title: t.presetLoadedTitle,
+      description: t.presetLoadedDescription.replace('{name}', pendingPresetName),
       variant: "success",
     });
     
@@ -301,8 +304,8 @@ export default function App() {
     trackMelodyEvent('clear');
     
     toast({
-      title: "メロディーをクリアしました",
-      description: "新しいメロディーを作成できます",
+      title: t.melodyClearedTitle,
+      description: t.melodyClearedDescription,
       variant: "default",
     });
   };
@@ -319,8 +322,8 @@ export default function App() {
         if (!open) {
           localStorage.setItem(WELCOME_KEY, 'true');
           toast({
-            title: "練習を始めましょう！",
-            description: "キーボードの「?」でショートカット一覧を表示できます",
+            title: t.practiceToastTitle,
+            description: t.practiceToastDescription,
             variant: "success",
           });
         }
@@ -329,10 +332,10 @@ export default function App() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <span className="text-2xl">🎵</span>
-              Recorder Viz へようこそ！
+              {t.welcomeTitle}
             </DialogTitle>
             <DialogDescription>
-              ブラウザで動くリコーダー練習アプリです。
+              {t.welcomeBody}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4 text-sm text-slate-600">
@@ -341,8 +344,8 @@ export default function App() {
                 <Music className="w-5 h-5" />
               </div>
               <div>
-                <strong className="block text-slate-900 mb-1">まずは「練習曲」から選ぼう</strong>
-                「カエルの歌」などの定番曲を選んで、自動演奏に合わせて練習できます。
+                <strong className="block text-slate-900 mb-1">{t.welcomeBulletSongTitle}</strong>
+                {t.welcomeBulletSongBody}
               </div>
             </div>
             <div className="flex items-start gap-3 animate-in slide-in-from-left-4 duration-500 delay-200">
@@ -350,8 +353,8 @@ export default function App() {
                 <Mic className="w-5 h-5" />
               </div>
               <div>
-                <strong className="block text-slate-900 mb-1">マイクで音程チェック</strong>
-                マイクをオンにすると、あなたの吹いている音が合っているか自動判定します。
+                <strong className="block text-slate-900 mb-1">{t.welcomeBulletMicTitle}</strong>
+                {t.welcomeBulletMicBody}
               </div>
             </div>
             <div className="flex items-start gap-3 animate-in slide-in-from-left-4 duration-500 delay-300">
@@ -359,8 +362,8 @@ export default function App() {
                 <Settings2 className="w-5 h-5" />
               </div>
               <div>
-                <strong className="block text-slate-900 mb-1">自分好みにカスタマイズ</strong>
-                画面の仕切りをドラッグして、3D表示の大きさを調整できます。
+                <strong className="block text-slate-900 mb-1">{t.welcomeBulletCustomizeTitle}</strong>
+                {t.welcomeBulletCustomizeBody}
               </div>
             </div>
           </div>
@@ -369,7 +372,7 @@ export default function App() {
               setShowWelcome(false);
               localStorage.setItem(WELCOME_KEY, 'true');
             }}>
-              はじめる
+              {t.welcomeStart}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -437,23 +440,23 @@ export default function App() {
           <div className="h-16 px-6 border-b border-slate-200 bg-white flex items-center justify-between shadow-sm z-10 shrink-0">
             <h2 className="font-bold text-slate-700 flex items-center gap-2">
               <Settings2 className="w-5 h-5 text-indigo-500" />
-              メロディーエディター
+              {t.melodyEditor}
             </h2>
             <div className="flex items-center gap-4">
               {isMelodyMuted && (
                 <div className="text-xs text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full flex items-center gap-1">
                   <VolumeX className="w-3 h-3" />
-                  ガイド音ミュート中
+                  {t.guideMuted}
                 </div>
               )}
               <div className="hidden sm:flex text-xs text-slate-500 items-center gap-6">
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 bg-indigo-500 rounded shadow-sm"></div>
-                  <span>音符を置く</span>
+                  <span>{t.placeNoteLegend}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 bg-slate-50 border border-slate-200 rounded shadow-sm"></div>
-                  <span>空き（休符）</span>
+                  <span>{t.restLegend}</span>
                 </div>
               </div>
             </div>
@@ -464,7 +467,7 @@ export default function App() {
 
               <div className="flex border-b border-slate-200 bg-slate-50/80 backdrop-blur sticky top-0 z-20">
                 <div className="w-28 shrink-0 p-3 border-r border-slate-200 text-xs font-bold text-slate-400 text-center flex items-center justify-center bg-slate-100/50">
-                  音階
+                  {t.scaleLabel}
                 </div>
                 <div className="flex">
                   {melodySteps.map((_, i) => (
@@ -485,7 +488,7 @@ export default function App() {
                     <button
                       onClick={addSteps}
                       className="w-full h-full rounded-lg hover:bg-indigo-50 text-slate-400 hover:text-indigo-600 flex items-center justify-center transition-colors border border-dashed border-slate-300 hover:border-indigo-300"
-                      title="小節を追加"
+                      title={t.addMeasure}
                     >
                       <Plus className="w-5 h-5" />
                     </button>
@@ -496,6 +499,7 @@ export default function App() {
               <div className="divide-y divide-slate-100">
                 {[...SCALE_ORDER].reverse().map((noteKey) => {
                   const noteInfo = FINGERINGS[noteKey];
+                  const noteLabel = (t.notes as Record<string, string>)[noteKey] ?? noteInfo.note;
 
                   return (
                     <div key={noteKey} className="flex group hover:bg-slate-50/50 transition-colors">
@@ -507,7 +511,7 @@ export default function App() {
                         }}
                       >
                         <span className={`font-bold text-base ${noteKey.includes('6') ? 'text-indigo-600' : 'text-slate-700'}`}>
-                          {noteInfo.note}
+                          {noteLabel}
                         </span>
                         <span className="text-xs font-mono text-slate-300 group-hover:text-indigo-300">{noteInfo.pitch}</span>
                       </div>
@@ -538,7 +542,7 @@ export default function App() {
                               >
                                 {isActive && (
                                   <span className="text-white font-bold text-xs pointer-events-none select-none">
-                                    {noteInfo.note}
+                                    {noteLabel}
                                   </span>
                                 )}
                               </div>
@@ -568,10 +572,10 @@ export default function App() {
       <ConfirmDialog
         open={showClearDialog}
         onOpenChange={setShowClearDialog}
-        title="メロディーをクリア"
-        description="現在のメロディーを全て消去します。この操作は取り消せません。"
-        confirmText="クリアする"
-        cancelText="キャンセル"
+        title={t.clearMelodyTitle}
+        description={t.clearMelodyDescription}
+        confirmText={t.confirmClear}
+        cancelText={t.cancel}
         onConfirm={confirmClearMelody}
         variant="destructive"
       />
@@ -579,10 +583,10 @@ export default function App() {
       <ConfirmDialog
         open={showLoadPresetDialog}
         onOpenChange={setShowLoadPresetDialog}
-        title="プリセットを読み込み"
-        description={pendingPresetName ? `「${pendingPresetName}」を読み込みますか？現在の編集内容は上書きされます。` : ''}
-        confirmText="読み込む"
-        cancelText="キャンセル"
+        title={t.loadPresetTitle}
+        description={pendingPresetName ? t.loadPresetDescription.replace('{name}', pendingPresetName) : ''}
+        confirmText={t.loadPresetConfirm}
+        cancelText={t.cancel}
         onConfirm={confirmLoadPreset}
         variant="default"
       />
