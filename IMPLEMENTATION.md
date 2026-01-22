@@ -8,9 +8,7 @@
 
 ## システムアーキテクチャ
 
-本プロジェクトのアーキテクチャ図は、[Draw.io形式で提供されています](./architecture.drawio)。
-
-[![Architecture Diagram](https://img.shields.io/badge/View-Architecture_Diagram-blue?logo=diagramsdotnet)](./architecture.drawio)
+本プロジェクトのアーキテクチャ図は、Draw.io形式で提供されています：[architecture.drawio](./architecture.drawio)
 
 このアーキテクチャ図には以下の要素が含まれています：
 
@@ -20,7 +18,10 @@
 - **データ層**: 運指データベース、プリセット楽曲、LocalStorage、i18n翻訳
 - **外部サービス**: Google Analytics 4
 
-アーキテクチャ図の閲覧には、[Draw.io](https://app.diagrams.net/)または[diagrams.net](https://www.diagrams.net/)を使用してください。VSCodeユーザーは[Draw.io Integration拡張機能](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio)を利用できます。
+**アーキテクチャ図の閲覧方法:**
+- Webブラウザ: [diagrams.net](https://app.diagrams.net/)（旧Draw.io）でファイルを開く
+- VSCode: [Draw.io Integration拡張機能](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio)をインストール
+- ダウンロード: architecture.drawioファイルをローカルにダウンロードして閲覧
 
 ### 技術スタック
 
