@@ -6,6 +6,22 @@
 
 **Recorder Visualizer**は、リコーダー学習を支援するインタラクティブなWebアプリケーションです。3D可視化、メロディーシーケンサー、ピッチ検出機能を統合し、ブラウザのみで完結する練習環境を提供します。
 
+## システムアーキテクチャ
+
+本プロジェクトのアーキテクチャ図は、[Draw.io形式で提供されています](./architecture.drawio)。
+
+[![Architecture Diagram](https://img.shields.io/badge/View-Architecture_Diagram-blue?logo=diagramsdotnet)](./architecture.drawio)
+
+このアーキテクチャ図には以下の要素が含まれています：
+
+- **ユーザーインターフェース層**: ブラウザ、UIコンポーネント、3Dキャンバス、シーケンサーUI
+- **コアアプリケーション層**: App.tsx、カスタムフック、Reactコンポーネント、コンテキスト
+- **エンジン層**: AudioEngine (Tone.js)、PitchDetector (Web Audio API)、Recorder3D (Three.js)
+- **データ層**: 運指データベース、プリセット楽曲、LocalStorage、i18n翻訳
+- **外部サービス**: Google Analytics 4
+
+アーキテクチャ図の閲覧には、[Draw.io](https://app.diagrams.net/)または[diagrams.net](https://www.diagrams.net/)を使用してください。VSCodeユーザーは[Draw.io Integration拡張機能](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio)を利用できます。
+
 ### 技術スタック
 
 - **フレームワーク**: React 19.2.0 + TypeScript

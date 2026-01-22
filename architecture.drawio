@@ -1,0 +1,326 @@
+<mxfile host="app.diagrams.net" modified="2026-01-22T16:18:00.000Z" agent="Draw.io" etag="architecture-v1" version="24.0.0" type="device">
+  <diagram name="Recorder Visualizer Architecture" id="recorder-arch">
+    <mxGraphModel dx="1434" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title" value="Recorder Visualizer - System Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- User Layer -->
+        <mxCell id="user-layer" value="User Interface Layer" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="80" width="1300" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- Browser -->
+        <mxCell id="browser" value="Web Browser (Chrome/Firefox/Safari)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1" vertex="1" parent="user-layer">
+          <mxGeometry x="20" y="40" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- User Input -->
+        <mxCell id="user-input" value="User Interactions&#xa;• Click/Touch&#xa;• Keyboard (Space)&#xa;• Mouse/Wheel&#xa;• Microphone" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;align=left" vertex="1" parent="user-layer">
+          <mxGeometry x="20" y="110" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- UI Components -->
+        <mxCell id="ui-components" value="UI Components&#xa;• Radix UI&#xa;• Tailwind CSS&#xa;• Lucide Icons" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left" vertex="1" parent="user-layer">
+          <mxGeometry x="250" y="40" width="180" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- 3D Canvas -->
+        <mxCell id="canvas-3d" value="3D Canvas&#xa;• React Three Fiber&#xa;• Three.js&#xa;• OrbitControls&#xa;• Recorder3D Component" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=left" vertex="1" parent="user-layer">
+          <mxGeometry x="460" y="40" width="200" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- Sequencer UI -->
+        <mxCell id="sequencer-ui" value="Sequencer UI&#xa;• 16-Step Grid&#xa;• Note Palette&#xa;• Playback Controls&#xa;• BPM/Volume Controls" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left" vertex="1" parent="user-layer">
+          <mxGeometry x="690" y="40" width="200" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- Tuner UI -->
+        <mxCell id="tuner-ui" value="Pitch Detector UI&#xa;• Real-time Display&#xa;• Pitch Difference&#xa;• Visual Feedback" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left" vertex="1" parent="user-layer">
+          <mxGeometry x="920" y="40" width="180" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- Dialog/Modal -->
+        <mxCell id="dialogs" value="Dialogs & Modals&#xa;• Welcome&#xa;• About/Privacy&#xa;• Keyboard Help" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left" vertex="1" parent="user-layer">
+          <mxGeometry x="1130" y="40" width="150" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- Core Application Layer -->
+        <mxCell id="core-layer" value="Core Application Layer (React 19 + TypeScript)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="280" width="1300" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- App.tsx -->
+        <mxCell id="app-tsx" value="App.tsx&#xa;Main Application&#xa;&#xa;State Management:&#xa;• melodySteps&#xa;• playback state&#xa;• settings (BPM/volume)&#xa;• UI state" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;align=left" vertex="1" parent="core-layer">
+          <mxGeometry x="40" y="40" width="240" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Hooks -->
+        <mxCell id="hooks" value="Custom Hooks&#xa;• useMelodyStorage&#xa;• usePitchDetector&#xa;• useResponsiveLayout&#xa;• useKeyboardShortcuts&#xa;• useStepScroll&#xa;• useLanguage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=left" vertex="1" parent="core-layer">
+          <mxGeometry x="310" y="40" width="200" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Components -->
+        <mxCell id="components" value="UI Components&#xa;• HeaderControls&#xa;• RecorderDisplay&#xa;• PlaybackControls&#xa;• BPMControl&#xa;• PitchFeedback&#xa;• PlaybackProgress" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left" vertex="1" parent="core-layer">
+          <mxGeometry x="540" y="40" width="200" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Contexts -->
+        <mxCell id="contexts" value="React Contexts&#xa;• LanguageContext&#xa;(i18n: ja/en)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left" vertex="1" parent="core-layer">
+          <mxGeometry x="770" y="40" width="150" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Utils -->
+        <mxCell id="utils" value="Utilities&#xa;• tunerHelpers&#xa;• analytics (GA4)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left" vertex="1" parent="core-layer">
+          <mxGeometry x="950" y="40" width="150" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Constants -->
+        <mxCell id="constants-types" value="Constants & Types&#xa;• TypeScript types&#xa;• App constants" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left" vertex="1" parent="core-layer">
+          <mxGeometry x="1130" y="40" width="150" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Engine Layer -->
+        <mxCell id="engine-layer" value="Audio & Graphics Engine Layer" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="500" width="1300" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- AudioEngine -->
+        <mxCell id="audio-engine" value="AudioEngine.ts&#xa;(Tone.js)&#xa;&#xa;• PolySynth (sine wave)&#xa;• Reverb effect&#xa;• Sequence playback&#xa;• Metronome&#xa;• Volume control" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;align=left" vertex="1" parent="engine-layer">
+          <mxGeometry x="80" y="40" width="220" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- PitchDetector -->
+        <mxCell id="pitch-detector" value="PitchDetector.ts&#xa;(Web Audio API)&#xa;&#xa;• MediaStream capture&#xa;• AnalyserNode&#xa;• Autocorrelation&#xa;• Frequency→Note&#xa;• Cent difference calc" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;align=left" vertex="1" parent="engine-layer">
+          <mxGeometry x="340" y="40" width="220" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Recorder3D -->
+        <mxCell id="recorder-3d" value="Recorder3D.tsx&#xa;(Three.js + R3F)&#xa;&#xa;• 3D Recorder model&#xa;• 8 holes visualization&#xa;• OrbitControls&#xa;• Labels & shadows&#xa;• Real-time fingering" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;fontStyle=1;align=left" vertex="1" parent="engine-layer">
+          <mxGeometry x="600" y="40" width="220" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Worker -->
+        <mxCell id="worker" value="Web Worker&#xa;worker.ts&#xa;&#xa;• Background&#xa;  processing&#xa;  (if needed)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left" vertex="1" parent="engine-layer">
+          <mxGeometry x="860" y="40" width="160" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Vite -->
+        <mxCell id="vite" value="Vite 7&#xa;Build Tool&#xa;&#xa;• Fast HMR&#xa;• Bundling&#xa;• TypeScript" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;align=left" vertex="1" parent="engine-layer">
+          <mxGeometry x="1060" y="40" width="160" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Data Layer -->
+        <mxCell id="data-layer" value="Data & Storage Layer" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="700" width="1300" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Fingerings -->
+        <mxCell id="fingerings" value="fingerings.ts&#xa;&#xa;Fingering Database:&#xa;• C5-D6 (9 notes)&#xa;• German style&#xa;• 8 holes config" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left" vertex="1" parent="data-layer">
+          <mxGeometry x="80" y="40" width="220" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Presets -->
+        <mxCell id="presets" value="presets.ts&#xa;&#xa;Preset Songs:&#xa;• Kaeru no Uta&#xa;• Kira Kira Boshi&#xa;• Mary's Lamb&#xa;• Tulip" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=left" vertex="1" parent="data-layer">
+          <mxGeometry x="340" y="40" width="220" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- LocalStorage -->
+        <mxCell id="localstorage" value="Browser LocalStorage&#xa;&#xa;Persisted Data:&#xa;• Melody steps&#xa;• Settings&#xa;• Welcome seen flag" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left" vertex="1" parent="data-layer">
+          <mxGeometry x="600" y="40" width="220" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Locales -->
+        <mxCell id="locales" value="locales/&#xa;&#xa;i18n Translations:&#xa;• ja.ts (Japanese)&#xa;• en.ts (English)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left" vertex="1" parent="data-layer">
+          <mxGeometry x="860" y="40" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- External Services -->
+        <mxCell id="external" value="External Services" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1100" y="700" width="250" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Google Analytics -->
+        <mxCell id="ga" value="Google Analytics 4&#xa;&#xa;Event Tracking:&#xa;• Playback events&#xa;• Mic usage&#xa;• Errors" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=left" vertex="1" parent="external">
+          <mxGeometry x="20" y="40" width="210" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows: User -> Core -->
+        <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;" edge="1" parent="1" source="browser" target="app-tsx">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow1-label" value="User Actions" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow1">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" x="-40" y="0"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrows: Core -> 3D Canvas -->
+        <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;" edge="1" parent="1" source="recorder-3d" target="canvas-3d">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow2-label" value="Render 3D" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow2">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" x="40" y="0"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrows: Core -> AudioEngine -->
+        <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;" edge="1" parent="1" source="app-tsx" target="audio-engine">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow3-label" value="Play/Stop" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow3">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" x="-35" y="0"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrows: Core -> PitchDetector -->
+        <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" edge="1" parent="1" source="hooks" target="pitch-detector">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow4-label" value="Start/Stop Mic" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow4">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" x="45" y="0"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrows: Data -> Core -->
+        <mxCell id="arrow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;" edge="1" parent="1" source="fingerings" target="audio-engine">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow5-label" value="Fingering Data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow5">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" x="-50" y="0"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrows: Presets -> Core -->
+        <mxCell id="arrow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.15;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;entryPerimeter=0;" edge="1" parent="1" source="presets" target="app-tsx">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="450" y="660" />
+              <mxPoint x="126" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow6-label" value="Load Preset" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow6">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="10"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrows: LocalStorage <-> Core -->
+        <mxCell id="arrow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#ffe6cc;strokeColor=#d79b00;startArrow=classic;startFill=1;" edge="1" parent="1" source="localstorage" target="app-tsx">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="710" y="660" />
+              <mxPoint x="270" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow7-label" value="Save/Load State" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow7">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="10"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrows: Fingerings -> Recorder3D -->
+        <mxCell id="arrow8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.15;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;entryPerimeter=0;" edge="1" parent="1" source="fingerings" target="recorder-3d">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="190" y="680" />
+              <mxPoint x="633" y="680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow8-label" value="Hole States" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow8">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="10"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrows: AudioEngine -> Sequencer -->
+        <mxCell id="arrow9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="audio-engine" target="components">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="190" y="490" />
+              <mxPoint x="640" y="490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow9-label" value="Audio Feedback" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow9">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="-10"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrows: GA -->
+        <mxCell id="arrow10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;" edge="1" parent="1" source="ga" target="utils">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1080" y="780" />
+              <mxPoint x="1080" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow10-label" value="Track Events" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow10">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" x="10" y="0"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrows: Locales -> Context -->
+        <mxCell id="arrow11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;" edge="1" parent="1" source="locales" target="contexts">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="680" />
+              <mxPoint x="845" y="680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow11-label" value="i18n Data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow11">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="10"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Legend -->
+        <mxCell id="legend" value="Legend" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="860" width="400" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend1" value="Data Flow" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="legend">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="20" y="30" as="sourcePoint" />
+            <mxPoint x="80" y="30" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend1-label" value="Solid: Direct call/control" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" parent="legend">
+          <mxGeometry x="90" y="20" width="200" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend2" value="Data Flow" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;dashed=1;" edge="1" parent="legend">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="20" y="60" as="sourcePoint" />
+            <mxPoint x="80" y="60" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend2-label" value="Dashed: Data/state flow" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" parent="legend">
+          <mxGeometry x="90" y="50" width="200" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- Notes -->
+        <mxCell id="notes" value="Key Features:&#xa;• Client-side only (no backend)&#xa;• HTTPS required for microphone&#xa;• LocalStorage for persistence&#xa;• Responsive layout with ResizablePanel&#xa;• i18n support (Japanese/English)&#xa;• Real-time 3D visualization&#xa;• Autocorrelation pitch detection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;verticalAlign=top" vertex="1" parent="1">
+          <mxGeometry x="480" y="860" width="870" height="100" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
